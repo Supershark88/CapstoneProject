@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>Plankton to Pixels Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+  </head>
+  <body>
+  <a href="/">    
+    <img src="{{ url_for('static', filename = 'arlingtonecho.jpeg') }}">
+    </a>
+    <form>
+
+      <h1> Database Entry No. ___</h1>
+      <p>Date: <input type="text"> / <input type="text"> / <input type="text"></p>
+      <p>Time Data was taken: <input type="text">:<input type="text"></p>
+      <br>
+
+      <h3><u>Water Quality Tests</u></h3>
+      <p>Water Temperature: <input type="text"> Degrees F</p>
+      <p>Turbidity: <input type="text"> cm</p>
+      <p>Salinity: <input type="text"> ppt</p>
+      <p>Dissolved Oxygen: <input type="text"> ppm</p>
+      <br>
+      
+      <h3><u>Macrorganisms</u></h3>
+      <p>Fish <input type="text"></p>
+      <p>Crabs <input type="text"></p>
+      <p>Shrimp <input type="text"></p>
+      <br>
+
+      <h3><u>Phytoplankton Results</u></h3>
+      <p>Akashiwo Sanguinia (A) <input type="text"></p>
+      <p>Heterocapsa triquetra (B) <input type="text"></p>
+      <p>Protoperidinium pellucidum (C) <input type="text"></p>
+      <p>Gyrodinium uncatenum (D) <input type="text"></p>
+      <p>Cyanobacteria (E) <input type="text"></p>
+      <p>Actinoptychus Senarius (F) <input type="text"></p>
+      <p>Cyclotella (G) <input type="text"></p>
+      <p>Dactyliosolen fragilissimus (H) <input type="text"></p>
+      <p>Skeletonema costatum (I) <input type="text"></p>
+      <br>
+      
+      <h3><u>Zooplankton</u></h3>
+      <p>Copepod (J)<input type="text"></p>
+      <p>Rotifer (K) <input type="text"> cm</p>
+      <p>Shrimp/Crab Larva (L)<input type="text"> ppt</p>
+      <br>
+      
+      <p>Notes:</p>
+      <textarea name="message" rows="10" cols="30"></textarea>
+      
+      <br>
+
+      <input type="submit" value="Submit"> 
+      <button type="button">Restart</button>
+    </form>
+  </body>
+</html>

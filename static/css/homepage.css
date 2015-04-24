@@ -1,0 +1,25 @@
+input[type=text]
+{
+   width: 30px;
+}
+
+body 
+{
+   background-color: #FFFF66;
+}
+
+h1
+{
+   background-color:;
+}
+
+li
+{
+    display: inline;
+    float: left;
+    width: 6em;
+    color: ;
+    background-color: #99CCFF;
+    padding: 0.8em 0.6em;
+    border-right: 1px solid white;
+}
