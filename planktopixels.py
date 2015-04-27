@@ -1,7 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, request, session, g, redirect, url_for, \
+     abort, render_template, flash
 from flask_wtf import Form
 import sqlite3
 from contextlib import closing
+from wtforms.fields.html5 import DateField
 
 # configuration
 DATABASE = './planktopixels.db'
@@ -24,18 +26,37 @@ def init_db():
         with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
         db.commit()
+        
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    db = getattr(g, 'db', None)
+    if db is not None:
+        db.close()
 
 @app.route('/')
 def homepage():
     return render_template('homepage.html')
 
-@app.route('/form')
-def form():
+@app.route('/form', methods=['POST', 'GET'])
+def form(): 
     return render_template('form.html')
+
+@app.route('/table')
+def table():
+    return render_template('table.html')
 
 @app.route('/graphs')
 def graphs():
     return render_template('graphs.html')
+
+@app.route('/download')
+def download():
+    return render_template('download.html')
+
 
 if __name__ == "__main__":
     from os import environ

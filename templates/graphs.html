@@ -4,24 +4,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
   </head>
   <body>
-   <thead>
-      <tr>
-         <td>&nbsp;</td>
-         <th scope="col">2012</th>
-         <th scope="col">2013</th>
-         <th scope="col">2014</th>
-         <th scope="col">2015</th>
-         <th scope="col">2016</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <th scope="row">Carbon Tiger</th>
-         <td>4080</td>
-         <td>6080</td>
-         <td>6240</td>
-         <td>3520</td>
-         <td>2240</td>
-      </tr>
+  <a href="/">    
+    <img src="{{ url_for('static', filename = 'arlingtonecho.jpeg') }}">
+    </a>
+    <ul>
+    <li><b><a href="form">Form</a></b></li>
+    <li><b><a href="table">Table</a></b></li>
+    <li><b><a href="graphs">Graphs</a></b></li>
+    <li><b><a href="download">Download</a></b></li>
+    </ul>
+    <br>
+    <br>
+   <p>Currently working on getting the data into Highcharts, which is a cool 
+   graphing program all in javascript. You can check it out <a href="http://www.highcharts.com/">here</a>!</p>
   </body>
 </html>

@@ -20,6 +20,18 @@ li
     width: 6em;
     color: ;
     background-color: #99CCFF;
-    padding: 0.8em 0.6em;
+    padding: 0.6em 0.6em;
     border-right: 1px solid white;
+    text-align: center;
+}
+
+table, th, td 
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td 
+{
+    text-align:center;
 }
