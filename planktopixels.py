@@ -4,6 +4,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
 import pprint
+import time
 
 # configuration
 DATABASE = './planktopixels.db'
@@ -11,6 +12,8 @@ DEBUG = True
 SECRET_KEY = 'Noah Zingler development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
+TIME_FMT_IN = "%Y-%m-%dT%H:%M"
+TIME_FMT_OUT = "%m/%d/%Y, %I:%M  %p"
 
 # create our little application :)
 app = Flask(__name__)
@@ -42,7 +45,8 @@ def show_entries():
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
                        'phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, ' \
                        'zooJ, zooK, zooL, notes from entries order by id asc')
-    entries = [dict(id=row[0], date=row[1], username=row[2], 
+    entries = [dict(id=row[0], date=time.strftime(TIME_FMT_OUT, time.localtime(row[1])), 
+                    username=row[2], 
                     temp=row[3], turbidity=row[4], salinity=row[5], do=row[6], 
                     fish=row[7], crabs=row[8], shrimp=row[9], phytoA=row[10], 
                     phytoB=row[11], phytoC=row[12], phytoD=row[13], 
@@ -70,7 +74,8 @@ def add_entry():
                  'fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, '
                  'phytoG, phytoH, phytoI, zooJ, zooK, zooL, notes) values (?, ?, ?, '
                  '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                 [request.form['date'], request.form['username'], request.form['temp'], 
+                 [time.mktime(time.strptime(request.form['date'], TIME_FMT_IN)), 
+                  request.form['username'], request.form['temp'], 
                   request.form['turbidity'], request.form['salinity'], 
                   request.form['do'], request.form['fish'], request.form['crabs'], 
                   request.form['shrimp'], request.form['phytoA'], 
