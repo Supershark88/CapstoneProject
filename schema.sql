@@ -2,9 +2,7 @@ drop table if exists entries;
 create table entries (
   id integer primary key autoincrement,
   date integer not null,
-  time integer not null,
-  username text not null,
-  
+  username text not null,  
   temp real,
   turbidity real,
   salinity real,
@@ -29,4 +27,5 @@ create table entries (
   zooL integer,
   
   notes text
+  
 );
