@@ -23,11 +23,46 @@ app.config.from_envvar('PLANKTOPIXELS_SETTINGS', silent=True)
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
 
-def init_db():
+def init_db(test=False):
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql', mode='r') as f:
             db.cursor().executescript(f.read())
         db.commit()
+        # test fill of the database
+        if test:
+            from random import randrange
+            
+            initial_time = time.mktime(time.localtime()) - (60*60*24*30)
+            for i in range(1000):
+                db.execute('insert into entries (date, username, temp, turbidity, salinity, do, '
+                             'fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, '
+                             'phytoG, phytoH, phytoI, zooJ, zooK, zooL, notes) values (?, ?, ?, '
+                             '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                            [initial_time + i * 1000, # date
+                             'Joe Smith', # username
+                             randrange(32,85), # temp
+                             randrange(10,150), # turbidity
+                             randrange(20, 50), # salinity
+                             randrange(10, 1000), # do
+                             randrange(0, 4), # fish
+                             randrange(0, 4), # crabs
+                             randrange(0, 4), # shrimp
+                             randrange(0, 4), # phytoA
+                             randrange(0, 4), # phytoB
+                             randrange(0, 4), # phytoC
+                             randrange(0, 4), # phytoD
+                             randrange(0, 4), # phytoE
+                             randrange(0, 4), # phytoF
+                             randrange(0, 4), # phytoG
+                             randrange(0, 4), # phytoH
+                             randrange(0, 4), # phytoI
+                             randrange(0, 4), # zooJ
+                             randrange(0, 4), # zooK
+                             randrange(0, 4), # zooL
+                             'text for notes goes here' # notes
+                             ])
+                db.commit()
+            
         
 @app.before_request
 def before_request():

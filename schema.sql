@@ -1,7 +1,7 @@
 drop table if exists entries;
 create table entries (
   id integer primary key autoincrement,
-  date integer not null,
+  date real not null,
   username text not null,  
   temp real,
   turbidity real,
