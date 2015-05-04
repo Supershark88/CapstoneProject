@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body %}
+   <table data-role="table" data-mode="columntoggle" class="ui-responsive" id="myTable">
+   <thead>
+    <tr>
+     <th>Entry #</th>
+     <th>Date</th>
+     <th data-priority="1">Submitter</th>
+     <th data-priority="2">Temperature (F)</th>
+     <th data-priority="2">Turbidity (cm)</th>
+     <th data-priority="2">Salinity (ppt)</th>
+     <th data-priority="2">Dissolved Oxygen (ppm)</th>
+     <th data-priority="3">Fish</th>
+     <th data-priority="3">Crabs</th>
+     <th data-priority="3">Shrimp</th>
+     <th data-priority="3">Akashiwo Sanguinia (A)</th>
+     <th data-priority="3">Heterocapsa triquetra (B)</th>
+     <th data-priority="3">Protoperidinium pellucidum (C)</th>
+     <th data-priority="3">Gyrodinium uncatenum (D)</th>
+     <th data-priority="3">Cyanobacteria (E)</th>
+     <th data-priority="3">Actinoptychus Senarius (F)</th>
+     <th data-priority="3">Cyclotella (G)</th>
+     <th data-priority="3">Dactyliosolen fragilissimus (H)</th>
+     <th data-priority="3">Skeletonema costatum (I)</th>
+     <th data-priority="3">Copepod (J)</th>
+     <th data-priority="3">Rotifer (K)</th>
+     <th data-priority="3">Shrimp/Crab Larva (L)</th>
+     <th data-priority="4">Notes</th>
+    </tr>
+   </thead>
+   <tbody>
+  {% for entry in entries %}
+    <tr>
+     <td>{{entry.id}}</td>
+     <td>{{entry.date}}</td>
+     <td>{{entry.username}}</td>
+     <td>{{entry.temp}}</td>
+     <td>{{entry.turbidity}}</td>
+     <td>{{entry.salinity}}</td>
+     <td>{{entry.do}}</td>
+     <td>{{entry.fish}}</td>
+     <td>{{entry.crabs}}</td>
+     <td>{{entry.shrimp}}</td>
+     <td>{{entry.phytoA}}</td>
+     <td>{{entry.phytoB}}</td>
+     <td>{{entry.phytoC}}</td>
+     <td>{{entry.phytoD}}</td>
+     <td>{{entry.phytoE}}</td>
+     <td>{{entry.phytoF}}</td>
+     <td>{{entry.phytoG}}</td>
+     <td>{{entry.phytoH}}</td>
+     <td>{{entry.phytoI}}</td>
+     <td>{{entry.zooJ}}</td>
+     <td>{{entry.zooK}}</td>
+     <td>{{entry.zooL}}</td>
+     <td>{{entry.notes}}</td>
+    </tr>
+  {% else %}
+    <tr><td><em>Unbelievable.  No entries here so far</em></td></tr>
+  {% endfor %}
+   </tbody>
+   </table>
+{% endblock %}
