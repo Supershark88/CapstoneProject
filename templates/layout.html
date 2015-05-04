@@ -1,28 +1,21 @@
 <!doctype html>
-<title>
-    <a href="/">    
-    <img src="{{ url_for('static', filename = 'arlingtonecho.jpeg') }}">
-    </a>
-</title>
+<title>Plankton to Pixels</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css">
-<script src="https://code.jquery.com/jquery-1.8.2.min.js"></script>
-<script src="https://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>/
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page data-role="page">
-  <h1>Plankton</h1>
+  <h1>Plankton to Pixels</h1>
+  <!--<ul>-->
+    <!--<li><b><a href="login">Form</a></b></li>-->
+    <!--<li><b><a href="graphs">Graphs</a></b></li>-->
+    <!--<li><b><a href="table">Table</a></b></li>-->
+    <!--<li><b><a href="download">Download</a></b></li>-->
+    <!--</ul>-->
+  <br>
+  <br>
   <div class=metanav>
-    <a href="/">    
-    <img src="{{ url_for('static', filename = 'arlingtonecho.jpeg') }}">
-    </a>
-    <ul>
-    <li><b><a href="form">Form</a></b></li>
-    <li><b><a href="graphs">Graphs</a></b></li>
-    <li><b><a href="#">Link three</a></b></li>
-    <li><b><a href="#">Download</a></b></li>
-    </ul>
-    <br>
-    <br>
     {% if not session.logged_in %}
       <a href="{{ url_for('login') }}">log in</a>
     {% else %}

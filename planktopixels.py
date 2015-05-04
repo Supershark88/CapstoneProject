@@ -36,7 +36,7 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-@app.route('/')
+@app.route('/table')
 def show_entries():
     cur = g.db.execute('select id, date, username, temp, turbidity, ' \
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
@@ -87,6 +87,8 @@ def add_entry():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+    if session.get('logged_in'):
+        return render_template('show_entries.html')
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid username'
