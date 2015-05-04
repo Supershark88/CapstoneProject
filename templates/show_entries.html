@@ -2,106 +2,54 @@
 {% block body %}
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-     <p>Username: <input type="text" name=username>
-      <p>Date: <input type="datetime-local" data-clear-btn="true" name="date" id="datetime-4" value="2015-05-02T02:10"></p>
-      <br>
-
-      <h3><u>Water Quality Tests</u></h3>
-      <p>Water Temperature: <input type="number" name="temp"> Degrees F</p>
-      <p>Turbidity: <input type="number" name="turbidity"> cm</p>
-      <p>Salinity: <input type="number"name="salinity"> ppt</p>
-      <p>Dissolved Oxygen: <input type="number" name="do"> ppm</p>
-      <br>
-      
+    <div class="ui-grid-b ui-responsive">
+      <div class="ui-block-a">
+       <p>Username: <input type="text" name=username >
+        <p>Date: <input type="datetime-local" data-clear-btn="true" name="date" id="datetime-4" value="2015-05-02T02:10" style="width:200px;"> </p>
+        <br>
+  
+        <h3><u>Water Quality Tests</u></h3>
+        <p>Water Temperature (Degrees F): <input type="number" name="temp" ></p>
+        <p>Turbidity (cm): <input type="number" name="turbidity" ></p>
+        <p>Salinity (ppt): <input type="number"name="salinity" ></p>
+        <p>Dissolved Oxygen (ppm): <input type="number" name="do" ></p>
+        <br>
+      </div>
+      <div class="ui-block-b">
       <h3><u>Macrorganisms</u></h3>
-      <p>Fish <input type="number" min="0" max="3" name="fish"></p>
-      <p>Crabs <input type="number" min="0" max="3" name="crabs"></p>
-      <p>Shrimp <input type="number" min="0" max="3" name="shrimp"></p>
-      <br>
+        <p>Fish <input type="number" min="0" max="3" name="fish"></p>
+        <p>Crabs <input type="number" min="0" max="3" name="crabs"></p>
+        <p>Shrimp <input type="number" min="0" max="3" name="shrimp" ></p>
+        <br>
 
-      <h3><u>Phytoplankton Results</u></h3>
-      <p>Akashiwo Sanguinia (A) <input type="number" min="0" max="3" name="phytoA"></p>
-      <p>Heterocapsa triquetra (B) <input type="number" min="0" max="3" name="phytoB"></p>
-      <p>Protoperidinium pellucidum (C) <input type="number" min="0" max="3" name="phytoC"></p>
-      <p>Gyrodinium uncatenum (D) <input type="number" min="0" max="3" name="phytoD"></p>
-      <p>Cyanobacteria (E) <input type="number" min="0" max="3" name="phytoE"></p>
-      <p>Actinoptychus Senarius (F) <input type="number" min="0" max="3" name="phytoF"></p>
-      <p>Cyclotella (G) <input type="number" min="0" max="3" name="phytoG"></p>
-      <p>Dactyliosolen fragilissimus (H) <input type="number" min="0" max="3" name="phytoH"></p>
-      <p>Skeletonema costatum (I) <input type="number" min="0" max="3" name="phytoI"></p>
-      <br>
+        <h3><u>Phytoplankton Results</u></h3>
+        <p>Akashiwo Sanguinia (A) <input type="number" min="0" max="3" name="phytoA" ></p>
+        <p>Heterocapsa triquetra (B) <input type="number" min="0" max="3" name="phytoB" ></p>
+        <p>Protoperidinium pellucidum (C) <input type="number" min="0" max="3" name="phytoC" ></p>
+        <p>Gyrodinium uncatenum (D) <input type="number" min="0" max="3" name="phytoD" ></p>
+        <p>Cyanobacteria (E) <input type="number" min="0" max="3" name="phytoE" ></p>
+        <p>Actinoptychus Senarius (F) <input type="number" min="0" max="3" name="phytoF" ></p>
+        <p>Cyclotella (G) <input type="number" min="0" max="3" name="phytoG" ></p>
+        <p>Dactyliosolen fragilissimus (H) <input type="number" min="0" max="3" name="phytoH" ></p>
+        <p>Skeletonema costatum (I) <input type="number" min="0" max="3" name="phytoI" ></p>
+        <br>
+      </div>
+      <div class="ui-block-c">
+        <h3><u>Zooplankton</u></h3>
+        <p>Copepod (J)<input type="text" name="zooJ"></p>
+        <p>Rotifer (K) <input type="text" name="zooK"></p>
+        <p>Shrimp/Crab Larva (L)<input type="text" name="zooL"></p>
+        <br>
       
-      <h3><u>Zooplankton</u></h3>
-      <p>Copepod (J)<input type="text" name="zooJ"></p>
-      <p>Rotifer (K) <input type="text" name="zooK"></p>
-      <p>Shrimp/Crab Larva (L)<input type="text" name="zooL"></p>
-      <br>
+        <p>Notes:</p>
+        <textarea rows="10" cols="30" name="notes"></textarea>
       
-      <p>Notes:</p>
-      <textarea rows="10" cols="30" name="notes"></textarea>
-      
-      <br>
+        <br>
 
-      <input type=submit value=Submit>
+        <input type=submit value=Submit data-inline="true">
+        <input type=reset value=Reset data-inline="true" data-theme="a">
+      </div>
+    </div>
     </form>
-  {% endif %}
-
-   <table style="width:100%" class=entries>
-    <tr>
-     <th>Entry #</th>
-     <th>Date</th>
-     <th>Time</th>
-     <th>Submitter</th>
-     <th>Temperature (F)</th>
-     <th>Turbidity (cm)</th>
-     <th>Salinity (ppt)</th>
-     <th>Dissolved Oxygen (ppm)</th>
-     <th>Fish</th>
-     <th>Crabs</th>
-     <th>Shrimp</th>
-     <th>Akashiwo Sanguinia (A)</th>
-     <th>Heterocapsa triquetra (B)</th>
-     <th>Protoperidinium pellucidum (C)</th>
-     <th>Gyrodinium uncatenum (D)</th>
-     <th>Cyanobacteria (E)</th>
-     <th>Actinoptychus Senarius (F)</th>
-     <th>Cyclotella (G)</th>
-     <th>Dactyliosolen fragilissimus (H)</th>
-     <th>Skeletonema costatum (I)</th>
-     <th>Copepod (J)</th>
-     <th>Rotifer (K)</th>
-     <th>Shrimp/Crab Larva (L)</th>
-     <th>Notes</th>
-    </tr>
-  {% for entry in entries %}
-    <tr>
-     <td>{{entry.id}}</td>
-     <td>{{entry.date}}</td>
-     <td>{{entry.time}}</td>
-     <td>{{entry.username}}</td>
-     <td>{{entry.temp}}</td>
-     <td>{{entry.turbidity}}</td>
-     <td>{{entry.salinity}}</td>
-     <td>{{entry.do}}</td>
-     <td>{{entry.fish}}</td>
-     <td>{{entry.crabs}}</td>
-     <td>{{entry.shrimp}}</td>
-     <td>{{entry.phytoA}}</td>
-     <td>{{entry.phytoB}}</td>
-     <td>{{entry.phytoC}}</td>
-     <td>{{entry.phytoD}}</td>
-     <td>{{entry.phytoE}}</td>
-     <td>{{entry.phytoF}}</td>
-     <td>{{entry.phytoG}}</td>
-     <td>{{entry.phytoH}}</td>
-     <td>{{entry.phytoI}}</td>
-     <td>{{entry.zooJ}}</td>
-     <td>{{entry.zooK}}</td>
-     <td>{{entry.zooL}}</td>
-     <td>{{entry.notes}}</td>
-    </tr>
-  {% else %}
-    <tr><td><em>Unbelievable.  No entries here so far</em></td></tr>
-  {% endfor %}
-   </table>
+  {% endif %}  
 {% endblock %}

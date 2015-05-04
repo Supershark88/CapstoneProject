@@ -74,7 +74,7 @@ def teardown_request(exception):
     if db is not None:
         db.close()
 
-@app.route('/')
+@app.route('/table')
 def show_entries():
     cur = g.db.execute('select id, date, username, temp, turbidity, ' \
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
@@ -88,7 +88,7 @@ def show_entries():
                     phytoE=row[14], phytoF=row[15], phytoG=row[16], 
                     phytoH=row[17], phytoI=row[18], zooJ=row[19], zooK=row[20], 
                     zooL=row[21], notes=row[22]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    return render_template('table.html', entries=entries)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -122,11 +122,13 @@ def add_entry():
                   request.form['zooL'], request.form['notes']])
     g.db.commit()
     flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+    return render_template('show_entries.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+    if session.get('logged_in'):
+        return render_template('show_entries.html')
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid username'
@@ -135,7 +137,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_entries'))
+            return render_template('show_entries.html')
     return render_template('login.html', error=error)
 
 @app.route('/logout')
