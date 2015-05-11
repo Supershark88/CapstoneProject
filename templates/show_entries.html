@@ -4,45 +4,45 @@
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
     <div class="ui-grid-b ui-responsive">
       <div class="ui-block-a">
-       <p>Username: <input type="text" name=username >
-        <p>Date: <input type="datetime-local" data-clear-btn="true" name="date" id="datetime-4" value="2015-05-02T02:10" style="width:200px;"> </p>
+       <p>Username: <input type="text" name=username style="width:250px;">
+        <p>Date: <input type="datetime-local" data-clear-btn="true" name="date" id="datetime-4" value="2015-05-02T02:10" style="width:250px;"> </p>
         <br>
   
         <h3><u>Water Quality Tests</u></h3>
-        <p>Water Temperature (Degrees F): <input type="number" name="temp" ></p>
-        <p>Turbidity (cm): <input type="number" name="turbidity" ></p>
-        <p>Salinity (ppt): <input type="number"name="salinity" ></p>
-        <p>Dissolved Oxygen (ppm): <input type="number" name="do" ></p>
+        <p>Water Temperature (Degrees F): <input type="number" name="temp" style="width:250px;"></p>
+        <p>Turbidity (cm): <input type="number" name="turbidity" style="width:250px;"></p>
+        <p>Salinity (ppt): <input type="number"name="salinity" style="width:250px;"></p>
+        <p>Dissolved Oxygen (ppm): <input type="number" name="do" style="width:250px;"></p>
+        <br>
+        
+        <h3><u>Macrorganisms</u></h3>
+        <p>Fish <input type="number" min="0" max="3" name="fish" style="width:250px;"></p>
+        <p>Crabs <input type="number" min="0" max="3" name="crabs" style="width:250px;"></p>
+        <p>Shrimp <input type="number" min="0" max="3" name="shrimp" style="width:250px;"></p>
         <br>
       </div>
       <div class="ui-block-b">
-      <h3><u>Macrorganisms</u></h3>
-        <p>Fish <input type="number" min="0" max="3" name="fish"></p>
-        <p>Crabs <input type="number" min="0" max="3" name="crabs"></p>
-        <p>Shrimp <input type="number" min="0" max="3" name="shrimp" ></p>
-        <br>
-
         <h3><u>Phytoplankton Results</u></h3>
-        <p>Akashiwo Sanguinia (A) <input type="number" min="0" max="3" name="phytoA" ></p>
-        <p>Heterocapsa triquetra (B) <input type="number" min="0" max="3" name="phytoB" ></p>
-        <p>Protoperidinium pellucidum (C) <input type="number" min="0" max="3" name="phytoC" ></p>
-        <p>Gyrodinium uncatenum (D) <input type="number" min="0" max="3" name="phytoD" ></p>
-        <p>Cyanobacteria (E) <input type="number" min="0" max="3" name="phytoE" ></p>
-        <p>Actinoptychus Senarius (F) <input type="number" min="0" max="3" name="phytoF" ></p>
-        <p>Cyclotella (G) <input type="number" min="0" max="3" name="phytoG" ></p>
-        <p>Dactyliosolen fragilissimus (H) <input type="number" min="0" max="3" name="phytoH" ></p>
-        <p>Skeletonema costatum (I) <input type="number" min="0" max="3" name="phytoI" ></p>
+        <p>Akashiwo Sanguinia (A) <input type="number" min="0" max="3" name="phytoA" style="width:250px;"></p>
+        <p>Heterocapsa triquetra (B) <input type="number" min="0" max="3" name="phytoB" style="width:250px;"></p>
+        <p>Protoperidinium pellucidum (C) <input type="number" min="0" max="3" name="phytoC" style="width:250px;"></p>
+        <p>Gyrodinium uncatenum (D) <input type="number" min="0" max="3" name="phytoD" style="width:250px;"></p>
+        <p>Cyanobacteria (E) <input type="number" min="0" max="3" name="phytoE" style="width:250px;"></p>
+        <p>Actinoptychus Senarius (F) <input type="number" min="0" max="3" name="phytoF" style="width:250px;"></p>
+        <p>Cyclotella (G) <input type="number" min="0" max="3" name="phytoG" style="width:250px;"></p>
+        <p>Dactyliosolen fragilissimus (H) <input type="number" min="0" max="3" name="phytoH" style="width:250px;"></p>
+        <p>Skeletonema costatum (I) <input type="number" min="0" max="3" name="phytoI" style="width:250px;"></p>
         <br>
       </div>
       <div class="ui-block-c">
         <h3><u>Zooplankton</u></h3>
-        <p>Copepod (J)<input type="text" name="zooJ"></p>
-        <p>Rotifer (K) <input type="text" name="zooK"></p>
-        <p>Shrimp/Crab Larva (L)<input type="text" name="zooL"></p>
+        <p>Copepod (J)<input type="text" name="zooJ" style="width:250px;"></p>
+        <p>Rotifer (K) <input type="text" name="zooK" style="width:250px;"></p>
+        <p>Shrimp/Crab Larva (L)<input type="text" name="zooL" style="width:250px;"></p>
         <br>
       
         <p>Notes:</p>
-        <textarea rows="10" cols="30" name="notes"></textarea>
+        <textarea rows="10" cols="30" name="notes" style="width:300px; height:250px;"></textarea>
       
         <br>
 
