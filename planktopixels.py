@@ -132,7 +132,15 @@ def dump():
 
 @app.route('/csv', methods=['GET', 'POST'])
 def csv():
-    subprocess.call("echo 'id, date, username, temp, turbidity, salinity, do, fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, zooJ, zooK, zooL, notes' > planktopixels.csv; sqlite3 -csv planktopixels.db 'select id, date, username, temp, turbidity, salinity, do, fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, zooJ, zooK, zooL, notes from entries order by id asc' >> planktopixels.csv", shell=True)
+    subprocess.call("echo 'id, date, username, temp, turbidity, salinity, do, " \
+                    "fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, " \
+                    "phytoE, phytoF, phytoG, phytoH, phytoI, zooJ, zooK, " \
+                    "zooL, notes' > planktopixels.csv; sqlite3 " \
+                    "-csv planktopixels.db 'select id, date, username, temp, " \
+                    "turbidity, salinity, do, fish, crabs, shrimp, phytoA, " \
+                    "phytoB, phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, " \
+                    "phytoI, zooJ, zooK, zooL, notes from entries order by id " \
+                    "asc' >> planktopixels.csv", shell=True)
     return(send_file('planktopixels.csv', as_attachment=True, attachment_filename='planktopixels.csv'))
 
 @app.route('/login', methods=['GET', 'POST'])
