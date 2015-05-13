@@ -42,9 +42,9 @@ def init_db(test=False):
                             [initial_time + i * 1000, # date
                              'Joe Smith', # username
                              randrange(32,85), # temp
-                             randrange(10,150), # turbidity
-                             randrange(20, 50), # salinity
-                             randrange(10, 1000), # do
+                             randrange(10,60), # turbidity
+                             randrange(1, 10), # salinity
+                             randrange(5, 8), # do
                              randrange(0, 4), # fish
                              randrange(0, 4), # crabs
                              randrange(0, 4), # shrimp
@@ -79,7 +79,7 @@ def teardown_request(exception):
 def homepage():
     return render_template('homepage.html')
 
-@app.route('/')
+@app.route('/table')
 def show_entries():
     cur = g.db.execute('select id, date, username, temp, turbidity, ' \
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
@@ -93,7 +93,7 @@ def show_entries():
                     phytoE=row[14], phytoF=row[15], phytoG=row[16], 
                     phytoH=row[17], phytoI=row[18], zooJ=row[19], zooK=row[20], 
                     zooL=row[21], notes=row[22]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    return render_template('table.html', entries=entries)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -160,7 +160,6 @@ def graphs(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
     turbs = [row[4] for row in alldata]
     sals = [row[5] for row in alldata]
     dos = [row[6] for row in alldata]
-    pprint.pprint(temps)
     chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
     series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
     title = {"text": 'My Title'}
@@ -187,7 +186,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return redirect(url_for('show_entries'))
+            return render_template('show_entries.html')
     return render_template('login.html', error=error)
 
 @app.route('/logout')
