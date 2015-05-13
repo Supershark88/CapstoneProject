@@ -1,10 +1,11 @@
 # all the imports
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
-     abort, render_template, flash
+     abort, render_template, flash, send_file
 from contextlib import closing
 import pprint
 import time
+import subprocess
 
 # configuration
 DATABASE = './planktopixels.db'
@@ -32,7 +33,7 @@ def init_db(test=False):
         if test:
             from random import randrange
             
-            initial_time = time.mktime(time.localtime()) - (60*60*24*30)
+            initial_time = time.mktime(time.localtime()) - (60*60*24*30) # sec/min * min/hr * hr/day * day/month
             for i in range(1000):
                 db.execute('insert into entries (date, username, temp, turbidity, salinity, do, '
                              'fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, '
@@ -78,7 +79,7 @@ def teardown_request(exception):
 def homepage():
     return render_template('homepage.html')
 
-@app.route('/table')
+@app.route('/')
 def show_entries():
     cur = g.db.execute('select id, date, username, temp, turbidity, ' \
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
@@ -92,7 +93,7 @@ def show_entries():
                     phytoE=row[14], phytoF=row[15], phytoG=row[16], 
                     phytoH=row[17], phytoI=row[18], zooJ=row[19], zooK=row[20], 
                     zooL=row[21], notes=row[22]) for row in cur.fetchall()]
-    return render_template('table.html', entries=entries)
+    return render_template('show_entries.html', entries=entries)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -126,7 +127,25 @@ def add_entry():
                   request.form['zooL'], request.form['notes']])
     g.db.commit()
     flash('New entry was successfully posted')
-    return render_template('show_entries.html')
+    return redirect(url_for('show_entries'))
+
+@app.route('/dump', methods=['GET', 'POST'])
+def dump():
+    subprocess.call('sqlite3 planktopixels.db .dump > planktopixels.dump', shell=True)
+    return(send_file('planktopixels.dump', as_attachment=True, attachment_filename='planktopixels.dump'))
+
+@app.route('/csv', methods=['GET', 'POST'])
+def csv():
+    subprocess.call("echo 'id, date, username, temp, turbidity, salinity, do, " \
+                    "fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, " \
+                    "phytoE, phytoF, phytoG, phytoH, phytoI, zooJ, zooK, " \
+                    "zooL, notes' > planktopixels.csv; sqlite3 " \
+                    "-csv planktopixels.db 'select id, date, username, temp, " \
+                    "turbidity, salinity, do, fish, crabs, shrimp, phytoA, " \
+                    "phytoB, phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, " \
+                    "phytoI, zooJ, zooK, zooL, notes from entries order by id " \
+                    "asc' >> planktopixels.csv", shell=True)
+    return(send_file('planktopixels.csv', as_attachment=True, attachment_filename='planktopixels.csv'))
 
 @app.route('/graphs')
 def graphs(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
@@ -160,8 +179,6 @@ def download():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    if session.get('logged_in'):
-        return render_template('show_entries.html')
     if request.method == 'POST':
         if request.form['username'] != app.config['USERNAME']:
             error = 'Invalid username'
@@ -170,7 +187,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in')
-            return render_template('show_entries.html')
+            return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
 
 @app.route('/logout')
