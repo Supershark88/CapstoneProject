@@ -73,6 +73,10 @@ def teardown_request(exception):
     db = getattr(g, 'db', None)
     if db is not None:
         db.close()
+        
+@app.route('/')
+def homepage():
+    return render_template('homepage.html')
 
 @app.route('/table')
 def show_entries():
@@ -123,6 +127,35 @@ def add_entry():
     g.db.commit()
     flash('New entry was successfully posted')
     return render_template('show_entries.html')
+
+@app.route('/graphs')
+def graphs(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
+    cur = g.db.execute('select id, date, username, temp, turbidity, ' \
+                       'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
+                       'phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, ' \
+                       'zooJ, zooK, zooL, notes from entries order by id asc')
+    #pprint.pprint(cur.fetchall())
+    alldata = cur.fetchall()
+    dates = [time.strftime(TIME_FMT_OUT, time.localtime(row[1])) for row in alldata]
+    temps = [row[3] for row in alldata]
+    turbs = [row[4] for row in alldata]
+    sals = [row[5] for row in alldata]
+    dos = [row[6] for row in alldata]
+    pprint.pprint(temps)
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
+    series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
+    title = {"text": 'My Title'}
+    xAxis = {"categories": dates}
+    yAxis = {"title": {"text": 'yAxis Label'}}
+    #yAxis1A = {"title": {"text": 'yAxis Label'}}
+    #yAxis1B = {"title": {"text": 'yAxis Label'}}
+    #yAxis1C = {"title": {"text": 'yAxis Label'}}
+    #yAxis1D = {"title": {"text": 'yAxis Label'}}
+    return render_template('graphs.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+
+@app.route('/download')
+def download():
+    return render_template('download.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

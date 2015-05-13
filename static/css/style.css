@@ -17,7 +17,8 @@ h1, h2
 
 h1              
 {
-    border-bottom: 2px solid #eee; 
+    border-bottom: 2px solid #eee;
+    display:inline;
 }
 
 h2              
@@ -29,7 +30,7 @@ h2
 {
     margin: auto;
     border: 5px solid #ccc;
-    padding: 0.8em;
+    padding: 0.6em;
     background: #FFFF66; 
 }
 
@@ -49,6 +50,7 @@ h2
     text-align: right;
     font-size: 0.8em; 
     padding: 0.3em;
+    padding-right: 2cm;
     margin-bottom: 1em;
 }
 
@@ -86,4 +88,5 @@ table, th, td
 th, td 
 {
     text-align:center;
+    font-size: 0.65em; 
 }
