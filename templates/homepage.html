@@ -1,4 +1,24 @@
 {% extends "layout.html" %}
 {% block body %}
-    <p>Hello! Homepage</p>
+    <h2>Welcome to the Plankton to Pixels Website!</h2>
+    <p>Plankton to Pixels is a STEM built database that is used in cooperation with 
+    Arlington Echo to track the health of the environment around the facility. 
+    Water quality, phytoplankton populations, and macrorganism species are all recorded 
+    by the forth grade field trips that visit the facility and learn about the Chesapeake 
+    region and its ecosystem.
+    <h4>Form</h4>
+    <p>The form is constructed to mimic the worksheets that are filled out at the 
+    testing site and require a secure login to access. Once the submit button is pressed 
+    the form sends the information to the database, where it is added and stored.</p>
+    <h4>Table</h4>
+    <p>The table shows every single entry and piece of data that is stored in the database 
+    and allows for easy comparision between entries.</p>
+    <h4>Graphs</h4>
+    <p>Currently there are three total graphs which utilize the database to display the 
+    data in a much more visual manner. The three graphs are split up into water quality, 
+    phytoplankton populations, and macrorganism populations.</p>
+    <h4>Downloads</h4>
+    <p>An important goal for a database to accomplish is to have its data be usable by anyone who 
+    requests it, and the Plankton to Pixels database allows for the download of the data in 
+    both a CSV file and a sqlite3 dump.</p>
 {% endblock %}

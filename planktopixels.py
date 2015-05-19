@@ -34,20 +34,20 @@ def init_db(test=False):
             from random import randrange
             
             initial_time = time.mktime(time.localtime()) - (60*60*24*30) # sec/min * min/hr * hr/day * day/month
-            for i in range(1000):
+            for i in range(25):
                 db.execute('insert into entries (date, username, temp, turbidity, salinity, do, '
                              'fish, crabs, shrimp, phytoA, phytoB, phytoC, phytoD, phytoE, phytoF, '
                              'phytoG, phytoH, phytoI, zooJ, zooK, zooL, notes) values (?, ?, ?, '
                              '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                             [initial_time + i * 1000, # date
                              'Joe Smith', # username
-                             randrange(32,85), # temp
+                             randrange(50,80), # temp
                              randrange(10,60), # turbidity
                              randrange(1, 10), # salinity
                              randrange(5, 8), # do
-                             randrange(0, 4), # fish
-                             randrange(0, 4), # crabs
-                             randrange(0, 4), # shrimp
+                             randrange(0, 10), # fish
+                             randrange(0, 10), # crabs
+                             randrange(0, 10), # shrimp
                              randrange(0, 4), # phytoA
                              randrange(0, 4), # phytoB
                              randrange(0, 4), # phytoC
@@ -147,8 +147,8 @@ def csv():
                     "asc' >> planktopixels.csv", shell=True)
     return(send_file('planktopixels.csv', as_attachment=True, attachment_filename='planktopixels.csv'))
 
-@app.route('/graphs')
-def graphs(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
+@app.route('/graphA')
+def graphA(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
     cur = g.db.execute('select id, date, username, temp, turbidity, ' \
                        'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
                        'phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, ' \
@@ -160,16 +160,76 @@ def graphs(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
     turbs = [row[4] for row in alldata]
     sals = [row[5] for row in alldata]
     dos = [row[6] for row in alldata]
-    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height,}
-    series = [{"name": 'Label1', "data": [1,2,3]}, {"name": 'Label2', "data": [4, 5, 6]}]
-    title = {"text": 'My Title'}
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    series = [{"name": 'Temperature', "data": temps, "tooltip": {"valueSuffix": ' F'}}, \
+              {"name": 'Turbidity', "data": turbs, "yAxis": 1, "tooltip": {"valueSuffix": ' cm'}}, \
+              {"name": 'Salinity', "data": sals, "yAxis": 2, "tooltip": {"valueSuffix": ' ppt'}}, \
+              {"name": 'Dissolved Oxygen', "data": dos, "yAxis": 3, "tooltip": {"valueSuffix": ' ppm'}}]
+    title = {"text": 'Water Quality'}
     xAxis = {"categories": dates}
-    yAxis = {"title": {"text": 'yAxis Label'}}
-    #yAxis1A = {"title": {"text": 'yAxis Label'}}
-    #yAxis1B = {"title": {"text": 'yAxis Label'}}
-    #yAxis1C = {"title": {"text": 'yAxis Label'}}
-    #yAxis1D = {"title": {"text": 'yAxis Label'}}
-    return render_template('graphs.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+    yAxis = [{"title": {"text": 'Temperature', "style": {"color": '#99CCFF'}}, "labels": {"format": '{value} F', "style": {"color": '#99CCFF'}}}, \
+            {"title": {"text": 'Turbidity'}, "labels": {"format": '{value} cm'}}, \
+            {"title": {"text": 'Salinity', "style": {"color": '#66FF00'}}, "labels": {"format": '{value} ppt', "style": {"color": '#66FF00'}}, "opposite": 'True'}, \
+            {"title": {"text": 'Dissolved Oxygen', "style": {"color": '#FF6600'}}, "labels": {"format": '{value} ppm', "style": {"color": '#FF6600'}}, "opposite": 'True'}]
+    return render_template('graphA.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+
+@app.route('/graphB')
+def graphB(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
+    cur = g.db.execute('select id, date, username, temp, turbidity, ' \
+                       'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
+                       'phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, ' \
+                       'zooJ, zooK, zooL, notes from entries order by id asc')
+    alldata = cur.fetchall()
+    dates = [time.strftime(TIME_FMT_OUT, time.localtime(row[1])) for row in alldata]
+    phytoA = [row[10] for row in alldata]
+    phytoB = [row[11] for row in alldata]
+    phytoC = [row[12] for row in alldata]
+    phytoD = [row[13] for row in alldata]
+    phytoE = [row[14] for row in alldata]
+    phytoF = [row[15] for row in alldata]
+    phytoG = [row[16] for row in alldata]
+    phytoH = [row[17] for row in alldata]
+    phytoI = [row[18] for row in alldata]
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    series = [{"name": 'Akashiwo Sanguinia', "data": phytoA}, \
+              {"name": 'Heterocapsa triquetra', "data": phytoB}, \
+              {"name": 'Protoperidinium pellucidum', "data": phytoC}, \
+              {"name": 'Gyrodinium uncatenum', "data": phytoD}, \
+              {"name": 'Cyanobacteria', "data": phytoE}, \
+              {"name": 'Actinoptychus Senarius', "data": phytoF}, \
+              {"name": 'Cyclotella ', "data": phytoG}, \
+              {"name": 'Dactyliosolen fragilissimus ', "data": phytoH}, \
+              {"name": 'Dactyliosolen fragilissimus ', "data": phytoH}]
+    title = {"text": 'Phytoplankton Populations'}
+    xAxis = {"categories": dates}
+    yAxis = [{"title": {"text": 'Amount Found'}}]
+    return render_template('graphB.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
+
+@app.route('/graphC')
+def graphC(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
+    cur = g.db.execute('select id, date, username, temp, turbidity, ' \
+                       'salinity, do, fish, crabs, shrimp, phytoA, phytoB, ' \
+                       'phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, phytoI, ' \
+                       'zooJ, zooK, zooL, notes from entries order by id asc')
+    alldata = cur.fetchall()
+    dates = [time.strftime(TIME_FMT_OUT, time.localtime(row[1])) for row in alldata]
+    fish = [row[7] for row in alldata]
+    crabs = [row[8] for row in alldata]
+    shrimp = [row[9] for row in alldata]
+    zooJ = [row[19] for row in alldata]
+    zooK = [row[20] for row in alldata]
+    zooL = [row[21] for row in alldata]
+    chart = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    series = [{"name": 'Fish', "data": fish}, \
+              {"name": 'Crabs', "data": crabs}, \
+              {"name": 'Shrimp', "data": shrimp}, \
+              {"name": 'Copepod', "data": zooJ}, \
+              {"name": 'Rotifer', "data": zooK}, \
+              {"name": 'Shrimp/Crab Larva', "data": zooL}]
+    title = {"text": 'Animal Populations'}
+    xAxis = {"categories": dates}
+    yAxis = [{"title": {"text": 'Amount Found'}}]
+    return render_template('graphC.html', chartID=chartID, chart=chart, series=series, title=title, xAxis=xAxis, yAxis=yAxis)
 
 @app.route('/download')
 def download():
