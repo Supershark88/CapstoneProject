@@ -8,7 +8,7 @@ import time
 import subprocess
 
 # configuration
-DATABASE = './planktopixels.db'
+DATABASE = '/var/www/CapstoneProject/CapstoneProject/planktopixels.db'
 DEBUG = True
 SECRET_KEY = 'Noah Zingler development key'
 USERNAME = 'admin'
@@ -131,8 +131,8 @@ def add_entry():
 
 @app.route('/dump', methods=['GET', 'POST'])
 def dump():
-    subprocess.call('sqlite3 planktopixels.db .dump > planktopixels.dump', shell=True)
-    return(send_file('planktopixels.dump', as_attachment=True, attachment_filename='planktopixels.dump'))
+    subprocess.call('sqlite3 planktopixels.db .dump > /tmp/planktopixels.dump', shell=True)
+    return(send_file('/tmp/planktopixels.dump', as_attachment=True, attachment_filename='planktopixels.dump'))
 
 @app.route('/csv', methods=['GET', 'POST'])
 def csv():
@@ -144,8 +144,8 @@ def csv():
                     "turbidity, salinity, do, fish, crabs, shrimp, phytoA, " \
                     "phytoB, phytoC, phytoD, phytoE, phytoF, phytoG, phytoH, " \
                     "phytoI, zooJ, zooK, zooL, notes from entries order by id " \
-                    "asc' >> planktopixels.csv", shell=True)
-    return(send_file('planktopixels.csv', as_attachment=True, attachment_filename='planktopixels.csv'))
+                    "asc' >> /tmp/planktopixels.csv", shell=True)
+    return(send_file('/tmp/planktopixels.csv', as_attachment=True, attachment_filename='planktopixels.csv'))
 
 @app.route('/graphA')
 def graphA(chartID = 'chart_ID', chart_type = 'line', chart_height = 500):
